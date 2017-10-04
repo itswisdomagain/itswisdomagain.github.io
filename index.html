@@ -18,9 +18,9 @@
 		<!-- Header -->
 			<header id="header">
 				<a href="#" class="image avatar"><img src="images/avatar.jpg" alt="" /></a>
-				<h1><strong>Meet Wisdom Arerosuoghene</strong>, he tries to<br/>
+				<h1>Meet <strong>Wisdom Arerosuoghene</strong>, he tries to<br/>
 				keep everything plain, simple.<br />
-				<a href="//wisdom.arerosuoghene.com" target="-blank">Check out his blog here</a>.</h1>
+				<!-- <a href="//wisdom.arerosuoghene.com" target="-blank">Check out his blog here</a>.</h1> -->
 			</header>
 
 		<!-- Main -->
@@ -40,9 +40,9 @@
 						<p>
 							I'm a strange dude! <a href="#three">Can you keep up with me?</a>
 						</p>
-						<ul class="actions">
+						<!-- <ul class="actions">
 							<li><a href="//wisdom.arerosuoghene.com" target="-blank" class="button">Check this out!</a></li>
-						</ul>
+						</ul> -->
 					</section>
 
 				<!-- Two -->
@@ -64,11 +64,11 @@
 								<h3>MySchool</h3>
 								<p>Basic/Secondary School Management Platform. Built for a Secondary School in Port Harcourt, Nigeria.</p>
 							</article>
-							<article class="6u$ 12u$(xsmall) work-item">
+							<!-- <article class="6u$ 12u$(xsmall) work-item">
 								<a href="http://www.irichland.club" target="_blank" class="image fit thumb"><img src="images/thumbs/irichland.jpg" alt="" /></a>
 								<h3>iRichland Club</h3>
 								<p>Peer-to-peer cash donation platform.</p>
-							</article>
+							</article> -->
 						</div>
 					</section>
 				
@@ -120,7 +120,7 @@
 						<p>Holla. Got something for me? Think I'd like it? Just wanna chat or say hi? Fire away. I'm just an email away (if there's anything like that!)</p>
 						<div class="row">
 							<div class="8u 12u$(small)">
-								<form method="post" action="sendmail.php">
+								<form method="post" action="sendmail.php" onclick="$('#error').fadeIn(1000); $('#submit').attr('disabled', ''); return false;">
 									<div class="row uniform 50%">
 										<div class="6u 12u$(xsmall)"><input type="text" name="name" id="name" required="true" placeholder="Name" /></div>
 										<div class="6u$ 12u$(xsmall)"><input type="email" name="email" id="email" required="true" placeholder="Email" /></div>
@@ -128,7 +128,8 @@
 									</div>
 									<br/>
 									<ul class="actions">
-										<li><input type="submit" value="Send Message" /></li>
+										<li><input id="submit" type="submit" value="Send Message" /></li>
+										<li id="error" style="display: none;">oops... send me an email instead, please...</li>
 									</ul>
 								</form>
 							</div>
@@ -136,7 +137,7 @@
 								<ul class="labeled-icons">
 									<li>
 										<h3 class="icon fa-home"><span class="label">Address</span></h3>
-										Choba, Port Harcourt<br />
+										Port Harcourt<br />
 										Rivers State<br />
 										Nigeria
 									</li>
@@ -146,7 +147,7 @@
 									</li>
 									<li>
 										<h3 class="icon fa-envelope-o"><span class="label">Email</span></h3>
-										<a href="mailto:wisdom@arerosuoghene.com">wisdom@arerosuoghene.com</a>
+										<a href="mailto:wisdom@arerosuoghene.com">wisdom.arerosuoghene@gmail.com</a>
 									</li>
 								</ul>
 							</div>
@@ -160,7 +161,7 @@
 				<ul class="icons">
 					<li><a href="https://facebook.com/itswisdomagain" target="_blank" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
 					<li><a href="https://twitter.com/itswisdomagain" target="_blank" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-					<li><a href="http://ng.linkedin.com/in/weezysoft" target="_blank" class="icon fa-linkedin"><span class="label">Twitter</span></a></li>
+					<li><a href="http://ng.linkedin.com/in/itswisdomagain" target="_blank" class="icon fa-linkedin"><span class="label">Twitter</span></a></li>
 					<li><a href="https://github.com/itswisdomagain" target="_blank" class="icon fa-github"><span class="label">Github</span></a></li>
 					<li><a href="http://stackoverflow.com/users/6086027/wisdom-arerosuoghene" target="_blank" class="icon fa-stack-overflow"><span class="label">StackOverflow</span></a></li>
 					<li><a href="maito:wisdom@arerosuoghene.com" class="icon fa-envelope-o"><span class="label">Email</span></a></li>
