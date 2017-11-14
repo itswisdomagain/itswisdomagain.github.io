@@ -2103,8 +2103,10 @@
 			}
 			.categories ol.type li {
 				display: inline-block;
-				margin-left: 20px;
-				margin-bottom: 16px;
+				margin-left: 10px;
+			    margin-bottom: 16px;
+			    margin-right: 10px;
+			    padding: 0;
 			}
 			.categories ol.type li a {
 				border: 1px solid #777;
@@ -2127,6 +2129,9 @@
 	ol {
 		list-style: decimal;
 		margin: 0 0 2em 0;
+	}
+
+	ol:not(.type) {
 		padding-left: 1.25em;
 	}
 
