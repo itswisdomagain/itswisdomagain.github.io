@@ -115,8 +115,9 @@
 
 		let story;
 
-		const amount = $('#calc').val();
+		let amount = $('#calc').val();
 		if (amount > 0) {
+			amount = amount / 100;
 			story = 'Bet <b>' + (result.homePercentage * amount) + '(' + result.homePercentage + '%)</b> on <b>' + result.home + '</b> to win <b>' + (result.homeOdd * result.homePercentage * amount) + '% profit</b><br>' + 
 			'Bet <b>' + (result.drawPercentage * amount) + '(' + result.drawPercentage + '%)</b> on <b>' + result.draw + '</b> to win <b>' + (result.drawOdd * result.drawPercentage * amount) + '% profit</b><br>' + 
 			'Bet <b>' + (result.awayPercentage * amount) + '(' + result.awayPercentage + '%)</b> on <b>' + result.away + '</b> to win <b>' + (result.awayOdd * result.awayPercentage * amount) + '% profit</b>';
