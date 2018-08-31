@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Algo</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.3/dist/semantic.min.css">
+</head>
+<body>
+
+	<table class="ui striped table">
+	  <thead>
+	    <tr>
+	      <th>S/N</th>
+	      <th>Site</th>
+	      <th>Home</th>
+	      <th>Draw</th>
+	      <th>Away</th>
+	    </tr>
+	  </thead>
+	  <tbody id="tbody">
+	  </tbody>
+	</table>
+
+	<div class="ui positive message">
+	  <i class="close icon"></i>
+	  <p id="message"></p>
+	</div>
+
+	<button class="ui primary button" onclick="askAPI();">
+	  Execute
+	</button>
+
+<script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.3/dist/semantic.min.js"></script>
+<script src="algo.js"></script>
+
+<script type="text/javascript">
+	function init() {
+		for (var i = 1; i <= 10; i++) {
+			var html = '<tr>\
+			      <td>Site ' + i + '</td>\
+			      <td>\
+			      	<div class="ui input">\
+			      	  <input type="text" placeholder="optional">\
+			      	</div>\
+			      </td>\
+			      <td>\
+			      	<div class="ui input">\
+			      	  <input type="number" id="site-' + i + '-home" placeholder="1.4" step="0.01">\
+			      	</div>\
+			      </td>\
+			      <td>\
+			      	<div class="ui input">\
+			      	  <input type="number" id="site-' + i + '-draw" placeholder="1.4" step="0.01">\
+			      	</div>\
+			      </td>\
+			      <td>\
+			      	<div class="ui input">\
+			      	  <input type="number" id="site-' + i + '-away" placeholder="1.4" step="0.01">\
+			      	</div>\
+			      </td>\
+			    </tr>';
+			
+			$('#tbody').append(html);
+		}
+	}
+
+	function clear() {
+		for (var i = 1; i <= 10; i++) {
+			$('#site-' + i + '-home').val('');
+			$('#site-' + i + '-draw').val('');
+			$('#site-' + i + '-away').val('');
+		}
+	}
+
+	function askAPI() {
+		var sites = [];
+		for (var i = 1; i <= 10; i++) {
+			var home = $('#site-' + i + '-home').val();
+			var draw = $('#site-' + i + '-draw').val();
+			var away = $('#site-' + i + '-away').val();
+
+			if (home >0 && draw > 0 && away > 0) {
+				sites.push([home, draw, away]);
+			}
+		}
+
+		if (sites.length < 3) {
+			alert('Fill at least 3');
+			return;
+		}
+
+		var result = runCheck(sites);
+		if (!result) {
+			$('#message').html('No optimizatable combination');
+			return;
+		}
+
+		$('#' + result.home).parent().addClass('error');
+		$('#' + result.draw).parent().addClass('error');
+		$('#' + result.away).parent().addClass('error');
+
+		const story = 'Bet <b>' + result.homePercentage + '%</b> on <b>' + result.home + '</b> for the potential to win <b>' + result.homeEarning / 100 + '% profit</b><br>' + 
+						'Bet <b>' + result.drawPercentage + '%</b> on <b>' + result.draw + '</b> for the potential to win <b>' + result.drawEarning / 100 + '% profit</b><br>' +
+						'Bet <b>' + result.awayPercentage + '%</b> on <b>' + result.away + '</b> for the potential to win <b>' + result.awayEarning / 100 + '% profit</b>';
+		$('#message').html(story);
+	}
+
+	init();
+</script>
+</body>
+</html>
