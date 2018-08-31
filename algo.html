@@ -8,7 +8,7 @@
 </head>
 <body>
 
-	<table class="ui striped table">
+	<table class="ui small striped table">
 	  <thead>
 	    <tr>
 	      <th>S/N</th>
@@ -22,19 +22,20 @@
 	  </tbody>
 	</table>
 
-	<div class="ui positive message">
+	<div id="message" class="ui positive message" style="display: none;">
 	  <i class="close icon"></i>
-	  <p id="message"></p>
+	  <p></p>
 	</div>
 
-	<button class="ui primary button" onclick="askAPI();">
-	  Execute
-	</button>
+	<div>
+		<div class="ui mini action input">
+		  <input id="calc" type="number" step="100" placeholder="Total investment">
+		  <button class="ui mini primary button" onclick="askAPI();">Calculate</button>
+		</div>
+		<button class="ui floated mini button" onclick="clearAll();">Clear</button>
+	</div>
 
-<script
-  src="https://code.jquery.com/jquery-3.1.1.min.js"
-  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-  crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.3/dist/semantic.min.js"></script>
 <script src="algo.js"></script>
 
@@ -69,20 +70,25 @@
 		}
 	}
 
-	function clear() {
-		for (var i = 1; i <= 10; i++) {
-			$('#site-' + i + '-home').val('');
-			$('#site-' + i + '-draw').val('');
-			$('#site-' + i + '-away').val('');
-		}
+	function clearAll() {
+		$('#tbody').html('');
+		init();
 	}
 
 	function askAPI() {
 		var sites = [];
 		for (var i = 1; i <= 10; i++) {
-			var home = $('#site-' + i + '-home').val();
-			var draw = $('#site-' + i + '-draw').val();
-			var away = $('#site-' + i + '-away').val();
+			var h = $('#site-' + i + '-home');
+			var d = $('#site-' + i + '-draw');
+			var a = $('#site-' + i + '-away');
+
+			h.parent().removeClass('error');
+			d.parent().removeClass('error');
+			a.parent().removeClass('error');
+
+			var home = h.val();
+			var draw = d.val();
+			var away = a.val();
 
 			if (home >0 && draw > 0 && away > 0) {
 				sites.push([home, draw, away]);
@@ -95,8 +101,11 @@
 		}
 
 		var result = runCheck(sites);
+		var message = $('#message');
+		message.show();
+
 		if (!result) {
-			$('#message').html('No optimizatable combination');
+			message.find('p').html('No optimizatable combination');
 			return;
 		}
 
@@ -104,10 +113,21 @@
 		$('#' + result.draw).parent().addClass('error');
 		$('#' + result.away).parent().addClass('error');
 
-		const story = 'Bet <b>' + result.homePercentage + '%</b> on <b>' + result.home + '</b> for the potential to win <b>' + result.homeEarning / 100 + '% profit</b><br>' + 
-						'Bet <b>' + result.drawPercentage + '%</b> on <b>' + result.draw + '</b> for the potential to win <b>' + result.drawEarning / 100 + '% profit</b><br>' +
-						'Bet <b>' + result.awayPercentage + '%</b> on <b>' + result.away + '</b> for the potential to win <b>' + result.awayEarning / 100 + '% profit</b>';
-		$('#message').html(story);
+		let story;
+
+		const amount = $('#calc').val();
+		if (amount > 0) {
+			story = 'Bet <b>' + (result.homePercentage * amount) + '(' + result.homePercentage + '%)</b> on <b>' + result.home + '</b> to win <b>' + (result.homeOdd * result.homePercentage * amount) + '% profit</b><br>' + 
+			'Bet <b>' + (result.drawPercentage * amount) + '(' + result.drawPercentage + '%)</b> on <b>' + result.draw + '</b> to win <b>' + (result.drawOdd * result.drawPercentage * amount) + '% profit</b><br>' + 
+			'Bet <b>' + (result.awayPercentage * amount) + '(' + result.awayPercentage + '%)</b> on <b>' + result.away + '</b> to win <b>' + (result.awayOdd * result.awayPercentage * amount) + '% profit</b>';
+		}
+		else {
+			story = 'Bet <b>' + result.homePercentage + '%</b> on <b>' + result.home + '</b> for the potential to win <b>' + (result.homeEarning / 100) + '% profit</b><br>' + 
+					'Bet <b>' + result.drawPercentage + '%</b> on <b>' + result.draw + '</b> for the potential to win <b>' + (result.drawEarning / 100) + '% profit</b><br>' +
+					'Bet <b>' + result.awayPercentage + '%</b> on <b>' + result.away + '</b> for the potential to win <b>' + (result.awayEarning / 100) + '% profit</b>';
+		}
+
+		message.find('p').html(story);
 	}
 
 	init();
